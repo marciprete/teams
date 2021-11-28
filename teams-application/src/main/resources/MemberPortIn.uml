@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.maconsulting.teams.application.member.port.in.ReadMemberUseCase</OriginalElement>
+  <nodes>
+    <node x="0.0" y="343.0">it.maconsulting.teams.application.service.member.CreateMemberService</node>
+    <node x="498.5644768856447" y="195.99999999999997">it.maconsulting.teams.application.member.port.in.ReadMemberUseCase</node>
+    <node x="41.0" y="0.0">it.maconsulting.teams.application.member.port.in.request.CreateMemberCommand</node>
+    <node x="498.5644768856447" y="321.0">it.maconsulting.teams.application.service.member.ReadMemberService</node>
+    <node x="87.5" y="238.0">it.maconsulting.teams.application.member.port.in.CreateMemberUseCase</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.maconsulting.teams.application.service.member.CreateMemberService" target="it.maconsulting.teams.application.member.port.in.CreateMemberUseCase" relationship="REALIZATION">
+      <point x="82.25" y="-26.5" />
+      <point x="246.75" y="317.0" />
+      <point x="252.0" y="317.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="it.maconsulting.teams.application.member.port.in.CreateMemberUseCase" target="it.maconsulting.teams.application.member.port.in.request.CreateMemberCommand" relationship="DEPENDENCY">
+      <point x="0.0" y="-26.5" />
+      <point x="252.0" y="212.0" />
+      <point x="164.5" y="212.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="it.maconsulting.teams.application.service.member.CreateMemberService" target="it.maconsulting.teams.application.member.port.in.request.CreateMemberCommand" relationship="DEPENDENCY">
+      <point x="-82.25" y="-26.5" />
+      <point x="82.25" y="317.0" />
+      <point x="77.0" y="317.0" />
+      <point x="77.0" y="212.0" />
+      <point x="164.5" y="212.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="it.maconsulting.teams.application.service.member.ReadMemberService" target="it.maconsulting.teams.application.member.port.in.ReadMemberUseCase" relationship="REALIZATION">
+      <point x="0.0" y="-37.5" />
+      <point x="0.0" y="37.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6217851739788199" showDependencies="true" x="208.5" y="320.5" />
+  <SelectedNodes>
+    <node>it.maconsulting.teams.application.member.port.in.ReadMemberUseCase</node>
+    <node>it.maconsulting.teams.application.service.member.ReadMemberService</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

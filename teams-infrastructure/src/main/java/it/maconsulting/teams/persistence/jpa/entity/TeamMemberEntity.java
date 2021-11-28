@@ -2,10 +2,7 @@ package it.maconsulting.teams.persistence.jpa.entity;
 
 import lombok.Data;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
@@ -22,6 +19,12 @@ public class TeamMemberEntity {
 
     private String email;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("teamId")
+    private TeamEntity team;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("memberId")
+    private MemberEntity member;
 
 }

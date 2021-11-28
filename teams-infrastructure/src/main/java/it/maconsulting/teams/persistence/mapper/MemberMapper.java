@@ -33,6 +33,7 @@ public class MemberMapper {
                 member.getName(),
                 member.getSurname(),
                 member.getEmail(),
+                null,
                 null
         );
     }
