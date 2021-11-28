@@ -23,7 +23,7 @@ public class TeamEntity {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "team")
     Set<TeamMemberEntity> members;
 
 }

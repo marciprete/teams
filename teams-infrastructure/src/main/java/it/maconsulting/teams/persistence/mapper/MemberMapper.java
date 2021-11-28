@@ -32,7 +32,8 @@ public class MemberMapper {
                 member.getId().map(Member.MemberId::getValue).orElse(null),
                 member.getName(),
                 member.getSurname(),
-                member.getEmail()
+                member.getEmail(),
+                null
         );
     }
 }

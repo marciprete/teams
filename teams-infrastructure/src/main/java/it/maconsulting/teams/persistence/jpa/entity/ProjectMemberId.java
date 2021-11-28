@@ -19,18 +19,12 @@ import java.util.UUID;
 
 @Data
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProjectMemberId implements Serializable {
 
     private UUID projectId;
 
     private UUID memberId;
-
-    private ProjectMemberId() {
-    }
-
-    public ProjectMemberId(UUID projectId, UUID memberId) {
-        this.projectId = projectId;
-        this.memberId = memberId;
-    }
 
 }

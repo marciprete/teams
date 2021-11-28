@@ -15,7 +15,7 @@ import java.util.UUID;
 public interface ProjectJpaRepository extends CrudRepository<ProjectEntity, UUID> {
 
     @Query("select p from ProjectEntity p " +
-//            "inner join fetch p.members " +
+            "inner join fetch p.members " +
             "where p.id = :uuid")
     Optional<ProjectEntity> fetchProjectWithMembersById(@Param("uuid") UUID uuid);
 }

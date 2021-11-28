@@ -1,6 +1,5 @@
 package it.maconsulting.teams.application.service.project;
 
-import it.maconsulting.microkernel.annotations.PersistenceAdapter;
 import it.maconsulting.microkernel.annotations.UseCase;
 import it.maconsulting.microkernel.exceptions.EntityNotFoundException;
 import it.maconsulting.teams.application.member.port.out.ReadMemberPort;
@@ -35,6 +34,6 @@ public class AddProjectMemberService implements AddProjectMemberUseCase {
 
         project.addMember(member, command.getRole());
 
-        modifyProjectPort.save(project);
+        modifyProjectPort.update(project);
     }
 }

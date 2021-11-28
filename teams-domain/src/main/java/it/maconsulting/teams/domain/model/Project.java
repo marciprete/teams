@@ -1,10 +1,15 @@
 package it.maconsulting.teams.domain.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Value;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.ValueObject;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Michele Arciprete
@@ -30,7 +35,7 @@ public class Project {
     }
 
     @Builder
-    private Project(ProjectId id, String name, Set<ProjectMember> members) {
+    Project(ProjectId id, String name, Set<ProjectMember> members) {
         this.id = id;
         this.name = name;
         this.members = members != null ? members : new HashSet<>();

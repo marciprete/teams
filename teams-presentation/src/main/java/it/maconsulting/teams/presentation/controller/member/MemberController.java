@@ -47,8 +47,9 @@ public class MemberController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<MemberDto>> list(@RequestParam(required = false, defaultValue = "0") int page,
-                                                @RequestParam(required = false, defaultValue = "25") @Max(100) int size) {
+    public ResponseEntity<Page<MemberDto>> list(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "25") @Max(100) int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Member> memberPage = readMemberUseCase.listMembers(pageRequest);
         Page<MemberDto> memberDtos = new PageImpl<>(

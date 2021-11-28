@@ -2,6 +2,7 @@ package it.maconsulting.teams.persistence.jpa.entity;
 
 import lombok.Data;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,11 +14,11 @@ import java.util.UUID;
  */
 @Data
 @Entity
-@Table(name = "team")
+@Table(name = "team_member")
 public class TeamMemberEntity {
 
-    @Id
-    private UUID id;
+    @EmbeddedId
+    private TeamMemberId id;
 
     private String email;
 

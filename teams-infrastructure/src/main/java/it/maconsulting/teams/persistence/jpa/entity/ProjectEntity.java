@@ -7,6 +7,7 @@ import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 
 import javax.persistence.*;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,11 +31,29 @@ public class ProjectEntity {
     @NaturalId
     private String name;
 
-//    @OneToMany(
-//            mappedBy = "project",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true
-//    )
-//    private Set<ProjectMemberEntity> members;
+    @OneToMany(
+            mappedBy = "project"
+    )
+    private Set<ProjectMemberEntity> members;
 
+    public void addMember(MemberEntity member, String role) {
+        ProjectMemberEntity projectMember = new ProjectMemberEntity(this, member, role);
+        members.add(projectMember);
+        member.getProjects().add(projectMember);
+    }
+
+    public void removeMember(MemberEntity member) {
+        for (Iterator<ProjectMemberEntity> iterator = members.iterator();
+             iterator.hasNext(); ) {
+            ProjectMemberEntity projectMember = iterator.next();
+
+            if (projectMember.getProject().equals(this) &&
+                    projectMember.getMember().equals(member)) {
+                iterator.remove();
+                projectMember.getProject().getMembers().remove(projectMember);
+                projectMember.setProject(null);
+                projectMember.setMember(null);
+            }
+        }
+    }
 }

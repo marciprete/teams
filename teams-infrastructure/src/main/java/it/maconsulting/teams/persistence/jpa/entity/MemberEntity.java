@@ -28,10 +28,12 @@ public class MemberEntity {
 
     private String email;
 
-//    @OneToMany(
-//            mappedBy = "member",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true
-//    )
-//    private Set<ProjectMemberEntity> projects;
+    @OneToMany(
+            mappedBy = "member"
+    )
+    private Set<ProjectMemberEntity> projects;
+
+    @OneToMany(mappedBy = "member")
+    Set<TeamMemberEntity> teams;
+
 }
