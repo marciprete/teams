@@ -4,10 +4,7 @@ import lombok.*;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.ValueObject;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Michele Arciprete
@@ -15,7 +12,6 @@ import java.util.UUID;
  */
 @Getter
 @AggregateRoot
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Project {
 
     private final ProjectId id;
@@ -33,8 +29,15 @@ public class Project {
         return new Project(id, name, members);
     }
 
-    public void addMember(Member member) {
+    @Builder
+    private Project(ProjectId id, String name, Set<ProjectMember> members) {
+        this.id = id;
+        this.name = name;
+        this.members = members != null ? members : new HashSet<>();
+    }
 
+    public void addMember(Member member, String role) {
+        this.members.add(new ProjectMember(member.getId().get(), role));
     }
 
     @Value

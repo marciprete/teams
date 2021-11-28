@@ -19,7 +19,6 @@ import java.util.*;
  */
 @Getter
 @AggregateRoot
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Team {
     /**
      * The unique ID of the team.
@@ -54,6 +53,12 @@ public class Team {
             String name,
             Set<TeamMember> teamMembers) {
         return new Team(teamId, name, teamMembers);
+    }
+
+    private Team(TeamId id, String name, Set<TeamMember> teamMembers) {
+        this.id = id;
+        this.name = name;
+        this.teamMembers = teamMembers != null ? teamMembers : new HashSet<>();
     }
 
     Optional<TeamId> getId() {

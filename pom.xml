@@ -21,11 +21,15 @@
         <module>teams-presentation</module>
         <module>teams-boot</module>
         <module>teams-application</module>
+        <module>microkernel</module>
     </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <microservice.name>teams</microservice.name>
+        <database.host>localhost</database.host>
+        <database.port>5432</database.port>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +45,36 @@
                 <artifactId>teams-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>it.maconsulting</groupId>
+                <artifactId>teams-infrastructure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>it.maconsulting</groupId>
+                <artifactId>teams-presentation</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>it.maconsulting</groupId>
+                <artifactId>microkernel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -57,9 +91,21 @@
         </dependency>
 
         <dependency>
-            <groupId>it.kiranet.fidcare</groupId>
-            <artifactId>microkernel</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:11.2-alpine
+    container_name: teams-db
+    environment:
+      - POSTGRES_DB=teams
+      - POSTGRES_USER=teams
+      - POSTGRES_PASSWORD=changeme-postgres
+      - POSTGRES_ROOT_PASSWORD=changeme-rootpw
+      - TZ=Europe/Rome
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    logging:
+      driver: json-file
+
+volumes:
+  pgdata:
+    driver: local
+      #    driver_opts:
+      #      type: none
+      #      o: bind
+    #device:

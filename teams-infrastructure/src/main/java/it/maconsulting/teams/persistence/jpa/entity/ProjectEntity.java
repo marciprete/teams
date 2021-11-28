@@ -1,11 +1,12 @@
 package it.maconsulting.teams.persistence.jpa.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,13 +18,23 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "project")
+@NaturalIdCache
+@Cache(
+        usage = CacheConcurrencyStrategy.READ_WRITE
+)
 public class ProjectEntity {
 
     @Id
     private UUID id;
 
+    @NaturalId
     private String name;
 
-    @OneToMany
-    private Set<ProjectMemberEntity> members;
+//    @OneToMany(
+//            mappedBy = "project",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    private Set<ProjectMemberEntity> members;
+
 }

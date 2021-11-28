@@ -1,9 +1,6 @@
 package it.maconsulting.teams.domain.model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import lombok.*;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.Entity;
 import org.jmolecules.ddd.annotation.ValueObject;
@@ -17,7 +14,6 @@ import java.util.UUID;
  */
 @Getter
 @Entity
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Member {
     private final MemberId id;
     private final String name;
@@ -26,6 +22,14 @@ public class Member {
 
     public Optional<MemberId> getId() {
         return Optional.ofNullable(id);
+    }
+
+    @Builder
+    private Member(UUID id, String name, String surname, String email) {
+        this.id = new MemberId(id);
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
     }
 
     @Value

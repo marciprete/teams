@@ -1,6 +1,6 @@
 package it.maconsulting.teams.application.project.port.in.request;
 
-import it.kiranet.fidcare.microkernel.annotations.SelfValidating;
+import it.maconsulting.microkernel.validation.SelfValidating;
 import it.maconsulting.teams.domain.model.Member;
 import it.maconsulting.teams.domain.model.Project;
 import lombok.EqualsAndHashCode;

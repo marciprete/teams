@@ -1,6 +1,9 @@
 package it.maconsulting.teams.persistence.jpa.entity;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -21,5 +24,13 @@ public class ProjectMemberId implements Serializable {
     private UUID projectId;
 
     private UUID memberId;
+
+    private ProjectMemberId() {
+    }
+
+    public ProjectMemberId(UUID projectId, UUID memberId) {
+        this.projectId = projectId;
+        this.memberId = memberId;
+    }
 
 }

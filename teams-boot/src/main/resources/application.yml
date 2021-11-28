@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: "@microservice.name@"
+  datasource:
+    url: "jdbc:postgresql://@database.host@:@database.port@/${spring.application.name}"
+    username: "${spring.application.name}"
+    password: changeme-postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        generate_statistics: false
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 50
+          lob:
+            non_contextual_creation: true
+        event:
+          merge:
+            entity_copy_observer: allow

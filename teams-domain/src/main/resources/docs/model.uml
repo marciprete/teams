@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.maconsulting.teams.domain.model</OriginalElement>
+  <nodes>
+    <node x="569.5" y="0.0">it.maconsulting.teams.domain.model.Team</node>
+    <node x="730.0" y="305.0">it.maconsulting.teams.domain.model.Team.TeamMember</node>
+    <node x="271.0" y="360.0">it.maconsulting.teams.domain.model.Member.MemberId</node>
+    <node x="108.0" y="0.0">it.maconsulting.teams.domain.model.Member</node>
+    <node x="580.0" y="943.0">it.maconsulting.teams.domain.model.Project.ProjectMember</node>
+    <node x="196.5" y="627.0">it.maconsulting.teams.domain.model.Project</node>
+    <node x="217.0" y="932.0">it.maconsulting.teams.domain.model.Project.ProjectBuilder</node>
+    <node x="0.0" y="965.0">it.maconsulting.teams.domain.model.Project.ProjectId</node>
+    <node x="513.0" y="349.0">it.maconsulting.teams.domain.model.Team.TeamId</node>
+    <node x="0.0" y="305.0">it.maconsulting.teams.domain.model.Member.MemberBuilder</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.maconsulting.teams.domain.model.Project.ProjectMember" target="it.maconsulting.teams.domain.model.Project" relationship="INNER_CLASS">
+      <point x="0.0" y="-105.5" />
+      <point x="713.5" y="907.0" />
+      <point x="388.5" y="907.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="it.maconsulting.teams.domain.model.Team.TeamMember" target="it.maconsulting.teams.domain.model.Team" relationship="INNER_CLASS">
+      <point x="0.0" y="-127.5" />
+      <point x="877.5" y="280.0" />
+      <point x="744.5" y="280.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="it.maconsulting.teams.domain.model.Project.ProjectBuilder" target="it.maconsulting.teams.domain.model.Project" relationship="INNER_CLASS">
+      <point x="0.0" y="-116.5" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="it.maconsulting.teams.domain.model.Team.TeamId" target="it.maconsulting.teams.domain.model.Team" relationship="INNER_CLASS">
+      <point x="0.0" y="-83.5" />
+      <point x="611.5" y="280.0" />
+      <point x="744.5" y="280.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="it.maconsulting.teams.domain.model.Project.ProjectId" target="it.maconsulting.teams.domain.model.Project" relationship="INNER_CLASS">
+      <point x="0.0" y="-83.5" />
+      <point x="98.5" y="907.0" />
+      <point x="388.5" y="907.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="it.maconsulting.teams.domain.model.Member.MemberBuilder" target="it.maconsulting.teams.domain.model.Member" relationship="INNER_CLASS">
+      <point x="0.0" y="-138.5" />
+      <point x="125.5" y="280.0" />
+      <point x="247.5" y="280.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="it.maconsulting.teams.domain.model.Member.MemberId" target="it.maconsulting.teams.domain.model.Member" relationship="INNER_CLASS">
+      <point x="0.0" y="-83.5" />
+      <point x="369.5" y="280.0" />
+      <point x="247.5" y="280.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.39662447257383965" showDependencies="false" x="512.5" y="582.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

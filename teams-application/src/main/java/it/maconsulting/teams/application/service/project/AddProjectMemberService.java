@@ -1,7 +1,9 @@
-package it.maconsulting.teams.application.project.service;
+package it.maconsulting.teams.application.service.project;
 
-import it.kiranet.fidcare.microkernel.exceptions.EntityNotFoundException;
-import it.maconsulting.teams.application.member.port.in.ReadMemberPort;
+import it.maconsulting.microkernel.annotations.PersistenceAdapter;
+import it.maconsulting.microkernel.annotations.UseCase;
+import it.maconsulting.microkernel.exceptions.EntityNotFoundException;
+import it.maconsulting.teams.application.member.port.out.ReadMemberPort;
 import it.maconsulting.teams.application.project.port.in.AddProjectMemberUseCase;
 import it.maconsulting.teams.application.project.port.in.request.AddProjectMemberCommand;
 import it.maconsulting.teams.application.project.port.out.ModifyProjectPort;
@@ -11,15 +13,12 @@ import it.maconsulting.teams.domain.model.Project;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
-import java.util.UUID;
-
 /**
  * @author Michele Arciprete
  * @since 0.0.1-SNAPSHOT
  */
 @Slf4j
-//@PersistenceAdapter
+@UseCase
 @RequiredArgsConstructor
 public class AddProjectMemberService implements AddProjectMemberUseCase {
 
@@ -34,7 +33,7 @@ public class AddProjectMemberService implements AddProjectMemberUseCase {
         Project project = readProjectPort.fetchProjectWithMembersById(command.getProjectId()).orElseThrow(
                 ()-> new EntityNotFoundException("Project", command.getProjectId().toString()));
 
-        project.addMember(member);
+        project.addMember(member, command.getRole());
 
         modifyProjectPort.save(project);
     }

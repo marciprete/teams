@@ -1,5 +1,6 @@
 package it.maconsulting.teams.persistence.service;
 
+import it.maconsulting.microkernel.annotations.PersistenceAdapter;
 import it.maconsulting.teams.application.project.port.out.ModifyProjectPort;
 import it.maconsulting.teams.application.project.port.out.ReadProjectPort;
 import it.maconsulting.teams.domain.model.Project;
@@ -15,6 +16,7 @@ import java.util.Optional;
  * @since 0.0.1-SNAPSHOT
  */
 @Slf4j
+@PersistenceAdapter
 @RequiredArgsConstructor
 public class ProjectAdapterService implements ReadProjectPort,
                                             ModifyProjectPort {
@@ -30,7 +32,8 @@ public class ProjectAdapterService implements ReadProjectPort,
     @Override
     public Optional<Project> fetchProjectWithMembersById(Project.ProjectId projectId) {
         return projectJpaRepository.fetchProjectWithMembersById(projectId.getValue()).map(
-                it -> projectMapper.toDomain(it, it.getMembers())
+//                it -> projectMapper.toDomain(it, it.getMembers())
+                it -> projectMapper.toDomain(it, null)
         );
     }
 }

@@ -19,13 +19,13 @@ public class ProjectMapper {
     public Project toDomain(ProjectEntity entity,
                      Set<ProjectMemberEntity> memberEntities) {
         Set<Project.ProjectMember> members = new HashSet<>();
-        if(memberEntities != null) {
-            memberEntities.forEach(me -> members.add(new Project.ProjectMember(
-                    new Member.MemberId(me.getId().getMemberId()),
-                    me.getRole()
-                    )
-            ));
-        }
+//        if(memberEntities != null) {
+//            memberEntities.forEach(me -> members.add(new Project.ProjectMember(
+//                    new Member.MemberId(me.getId().getMemberId()),
+//                    me.getRole()
+//                    )
+//            ));
+//        }
         return Project.withId(new Project.ProjectId(entity.getId()),
                 entity.getName(),
                 members);

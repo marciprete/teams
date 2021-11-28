@@ -2,10 +2,7 @@ package it.maconsulting.teams.persistence.jpa.entity;
 
 import lombok.Data;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
@@ -14,13 +11,26 @@ import java.util.UUID;
  */
 
 @Data
-@Entity
+//@Entity
 @Table(name = "project")
 public class ProjectMemberEntity {
 
-    @EmbeddedId
-    private ProjectMemberId id;
+//    @EmbeddedId
+//    private ProjectMemberId id;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @MapsId("projectId")
+//    private ProjectEntity project;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @MapsId("memberId")
+//    private MemberEntity member;
+//
+//    private String role;
 
-    private String role;
-
+//    public ProjectMemberEntity(ProjectEntity project, MemberEntity member) {
+//        this.project = project;
+//        this.member = member;
+//        this.id = new ProjectMemberId(project.getId(), member.getId());
+//    }
 }

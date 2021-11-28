@@ -1,10 +1,11 @@
 package it.maconsulting.teams.persistence.jpa.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -13,6 +14,8 @@ import java.util.UUID;
  */
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "member")
 public class MemberEntity {
 
@@ -25,4 +28,10 @@ public class MemberEntity {
 
     private String email;
 
+//    @OneToMany(
+//            mappedBy = "member",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    private Set<ProjectMemberEntity> projects;
 }
