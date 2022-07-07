@@ -1,9 +1,8 @@
-package it.maconsulting.teams.application.member.port.in.request;
+package it.maconsulting.teams.application.employee.port.in.command;
 
 import it.maconsulting.microkernel.validation.SelfValidating;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -11,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * @since 0.0.1-SNAPSHOT
  */
 @Data
-public class CreateMemberCommand extends SelfValidating<CreateMemberCommand> {
+public class CreateEmployeeCommand extends SelfValidating<CreateEmployeeCommand> {
 
     @NotNull
     private String name;
@@ -22,7 +21,7 @@ public class CreateMemberCommand extends SelfValidating<CreateMemberCommand> {
     @NotNull
     private String email;
 
-    public CreateMemberCommand(String name, String surname, String email) {
+    public CreateEmployeeCommand(String name, String surname, String email) {
         this.name = name;
         this.surname = surname;
         this.email = email;

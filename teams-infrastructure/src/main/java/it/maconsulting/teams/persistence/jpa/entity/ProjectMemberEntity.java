@@ -1,11 +1,9 @@
 package it.maconsulting.teams.persistence.jpa.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 /**
  * @author Michele Arciprete
@@ -27,11 +25,11 @@ public class ProjectMemberEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("memberId")
-    private MemberEntity member;
+    private EmployeeEntity member;
 
     private String role;
 
-    public ProjectMemberEntity(ProjectEntity project, MemberEntity member, String role) {
+    public ProjectMemberEntity(ProjectEntity project, EmployeeEntity member, String role) {
         this.project = project;
         this.member = member;
         this.role = role;

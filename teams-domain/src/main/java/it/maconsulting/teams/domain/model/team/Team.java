@@ -1,8 +1,7 @@
-package it.maconsulting.teams.domain.model;
+package it.maconsulting.teams.domain.model.team;
 
-import lombok.AccessLevel;
+import it.maconsulting.teams.domain.model.employee.Employee;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.ValueObject;
@@ -82,7 +81,7 @@ public class Team {
     @ValueObject
     static class TeamMember {
         UUID teamMemberId;
-        Member.MemberId memberId;
+        Employee.EmployeeId employeeId;
         String email;
     }
 

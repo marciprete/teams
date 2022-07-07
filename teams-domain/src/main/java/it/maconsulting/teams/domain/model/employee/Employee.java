@@ -1,7 +1,6 @@
-package it.maconsulting.teams.domain.model;
+package it.maconsulting.teams.domain.model.employee;
 
 import lombok.*;
-import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.Entity;
 import org.jmolecules.ddd.annotation.ValueObject;
 
@@ -14,19 +13,19 @@ import java.util.UUID;
  */
 @Getter
 @Entity
-public class Member {
-    private final MemberId id;
+public class Employee {
+    private final EmployeeId id;
     private final String name;
     private final String surname;
     private final String email;
 
-    public Optional<MemberId> getId() {
+    public Optional<EmployeeId> getId() {
         return Optional.ofNullable(id);
     }
 
     @Builder
-    private Member(UUID id, String name, String surname, String email) {
-        this.id = new MemberId(id);
+    private Employee(UUID id, String name, String surname, String email) {
+        this.id = new EmployeeId(id);
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -34,7 +33,7 @@ public class Member {
 
     @Value
     @ValueObject
-    public static class MemberId {
+    public static class EmployeeId {
         UUID value;
     }
 }

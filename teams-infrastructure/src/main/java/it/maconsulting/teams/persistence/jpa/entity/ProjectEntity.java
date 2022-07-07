@@ -1,6 +1,8 @@
 package it.maconsulting.teams.persistence.jpa.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalId;
@@ -31,18 +33,21 @@ public class ProjectEntity {
     @NaturalId
     private String name;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(
-            mappedBy = "project"
+            mappedBy = "project",
+            cascade = {CascadeType.ALL}
     )
     private Set<ProjectMemberEntity> members;
 
-    public void addMember(MemberEntity member, String role) {
+    public void addMember(EmployeeEntity member, String role) {
         ProjectMemberEntity projectMember = new ProjectMemberEntity(this, member, role);
         members.add(projectMember);
         member.getProjects().add(projectMember);
     }
 
-    public void removeMember(MemberEntity member) {
+    public void removeMember(EmployeeEntity member) {
         for (Iterator<ProjectMemberEntity> iterator = members.iterator();
              iterator.hasNext(); ) {
             ProjectMemberEntity projectMember = iterator.next();

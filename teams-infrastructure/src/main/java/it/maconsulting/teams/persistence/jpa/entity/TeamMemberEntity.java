@@ -3,7 +3,6 @@ package it.maconsulting.teams.persistence.jpa.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 /**
  * @author Michele Arciprete
@@ -25,6 +24,6 @@ public class TeamMemberEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("memberId")
-    private MemberEntity member;
+    private EmployeeEntity member;
 
 }

@@ -3,7 +3,7 @@ package it.maconsulting.teams.application.service.project;
 import it.maconsulting.microkernel.annotations.UseCase;
 import it.maconsulting.teams.application.project.port.in.ReadProjectUseCase;
 import it.maconsulting.teams.application.project.port.out.ReadProjectPort;
-import it.maconsulting.teams.domain.model.Project;
+import it.maconsulting.teams.domain.model.project.Project;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public class ReadProjectService implements ReadProjectUseCase {
 
     @Override
     public Page<Project> list(Pageable pageRequest) {
-        return null;
+        return readProjectPort.findAll(pageRequest);
     }
 
     @Override

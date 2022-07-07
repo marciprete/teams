@@ -1,6 +1,8 @@
 package it.maconsulting.teams.application.project.port.out;
 
-import it.maconsulting.teams.domain.model.Project;
+import it.maconsulting.teams.domain.model.project.Project;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -10,4 +12,8 @@ import java.util.Optional;
  */
 public interface ReadProjectPort {
     Optional<Project> fetchProjectWithMembersById(Project.ProjectId projectId);
+
+    Optional<Project> findProjectByName(String name);
+
+    Page<Project> findAll (Pageable pageRequest);
 }

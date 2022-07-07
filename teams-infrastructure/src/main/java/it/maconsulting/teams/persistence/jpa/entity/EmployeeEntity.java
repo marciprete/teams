@@ -1,8 +1,6 @@
 package it.maconsulting.teams.persistence.jpa.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,8 +14,8 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "member")
-public class MemberEntity {
+@Table(name = "employee")
+public class EmployeeEntity {
 
     @Id
     private UUID id;
@@ -28,11 +26,13 @@ public class MemberEntity {
 
     private String email;
 
-    @OneToMany(
-            mappedBy = "member"
-    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "member")
     private Set<ProjectMemberEntity> projects;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "member")
     Set<TeamMemberEntity> teams;
 

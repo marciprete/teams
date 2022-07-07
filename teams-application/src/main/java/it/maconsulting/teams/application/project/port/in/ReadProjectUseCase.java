@@ -1,7 +1,6 @@
 package it.maconsulting.teams.application.project.port.in;
 
-import it.maconsulting.teams.application.project.port.in.request.AddProjectMemberCommand;
-import it.maconsulting.teams.domain.model.Project;
+import it.maconsulting.teams.domain.model.project.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,5 +1,6 @@
 package it.maconsulting.teams.presentation.controller.team;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"Teams"})
 @RequestMapping("teams")
 public class TeamsController {
 
@@ -32,6 +34,7 @@ public class TeamsController {
      */
     @PostMapping
     public ResponseEntity<String> create(@RequestBody String name) {
+
         return ResponseEntity.ok("OK");
     }
 

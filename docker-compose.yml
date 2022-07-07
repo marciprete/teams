@@ -17,10 +17,59 @@ services:
     logging:
       driver: json-file
 
+  keycloak_db:
+    image: postgres:11.2-alpine
+    container_name: kira-kc-postgres
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=changeme-postgres
+      - POSTGRES_ROOT_PASSWORD=changeme-rootpw
+    networks:
+      - my-network
+    volumes:
+      - ./keycloak/postgres:/var/lib/postgresql/data
+    logging:
+      driver: json-file
+
+  keycloak:
+    image: jboss/keycloak:16.1.0
+    container_name: kira-kc
+    healthcheck:
+      test: "exit 0"
+    ports:
+      - 8180:8080
+      - 8543:8543
+      - 10090:10090
+    hostname: keycloak
+    volumes:
+      - ./keycloak/data:/opt/keycloak
+     # - ./keycloak/setup:/tmp/keycloak/test/
+    environment:
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=keycloak_db
+      - DB_DATABASE=keycloak
+      - DB_PORT=5432
+      - DB_USER=keycloak
+      - DB_SCHEMA=public
+      - DB_PASSWORD=changeme-postgres
+      - PROXY_ADDRESS_FORWARDING=true
+      - KEYCLOAK_LOGLEVEL=INFO
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=Pa55w0rd
+#      - KEYCLOAK_IMPORT=/tmp/keycloak/test/my-realm.json
+    networks:
+      - my-network
+    command: [ "-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled -Dkeycloak.profile.feature.upload_scripts=enabled -Dkeycloak.profile.feature.account_api=enabled -Dkeycloak.profile.feature.account2=enabled" ]
+    depends_on:
+      - keycloak_db
+    logging:
+      driver: json-file
+
+networks:
+  my-network:
+    driver: bridge
+
 volumes:
   pgdata:
     driver: local
-      #    driver_opts:
-      #      type: none
-      #      o: bind
-    #device:

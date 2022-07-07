@@ -5,17 +5,18 @@ import it.maconsulting.microkernel.exceptions.DomainException;
 import it.maconsulting.teams.application.project.port.out.CreateProjectPort;
 import it.maconsulting.teams.application.project.port.out.ModifyProjectPort;
 import it.maconsulting.teams.application.project.port.out.ReadProjectPort;
-import it.maconsulting.teams.domain.model.Member;
-import it.maconsulting.teams.domain.model.Project;
-import it.maconsulting.teams.persistence.jpa.entity.MemberEntity;
+import it.maconsulting.teams.domain.model.employee.Employee;
+import it.maconsulting.teams.domain.model.project.Project;
+import it.maconsulting.teams.persistence.jpa.entity.EmployeeEntity;
 import it.maconsulting.teams.persistence.jpa.entity.ProjectEntity;
 import it.maconsulting.teams.persistence.jpa.entity.ProjectMemberEntity;
-import it.maconsulting.teams.persistence.jpa.entity.ProjectMemberId;
-import it.maconsulting.teams.persistence.jpa.repository.MemberJpaRepository;
+import it.maconsulting.teams.persistence.jpa.repository.EmployeeJpaRepository;
 import it.maconsulting.teams.persistence.jpa.repository.ProjectJpaRepository;
 import it.maconsulting.teams.persistence.mapper.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,7 +33,7 @@ public class ProjectAdapterService implements ReadProjectPort,
         CreateProjectPort {
 
     private final ProjectJpaRepository projectJpaRepository;
-    private final MemberJpaRepository memberJpaRepository;
+    private final EmployeeJpaRepository employeeJpaRepository;
     private final ProjectMapper projectMapper;
 
     @Override
@@ -41,6 +42,13 @@ public class ProjectAdapterService implements ReadProjectPort,
         return projectMapper.toDomain(saved);
     }
 
+    /**
+     * This method avoids the "collection overwrite anti-pattern", and uses the best practice of the
+     * collection update, as described in detail here: https://vladmihalcea.com/merge-entity-collections-jpa-hibernate/
+     *
+     * @param project
+     * @return
+     */
     @Override
     public Project update(Project project) {
         UUID projecId = project.getId().map(Project.ProjectId::getValue).orElseThrow();
@@ -60,7 +68,7 @@ public class ProjectAdapterService implements ReadProjectPort,
         Set<ProjectMemberEntity> newMembers = new HashSet<>(members);
         newMembers.removeAll(old.getMembers());
         members.removeAll(newMembers);
-        removedMembers.forEach(it -> old.addMember(it.getMember(), it.getRole()));
+        newMembers.forEach(it -> old.addMember(it.getMember(), it.getRole()));
 
         return projectMapper.toDomain(
                 projectJpaRepository.save(old)
@@ -68,16 +76,16 @@ public class ProjectAdapterService implements ReadProjectPort,
     }
 
     private ProjectEntity rehidrate(ProjectEntity entity, Project domain) {
-        List<UUID> membersId = domain.getMembers().stream().map(Project.ProjectMember::getMemberId)
-                .map(Member.MemberId::getValue)
+        List<UUID> membersId = domain.getMembers().stream().map(Project.Member::getEmployeeId)
+                .map(Employee.EmployeeId::getValue)
                 .collect(Collectors.toList());
-        List<MemberEntity> members = memberJpaRepository.findAllByIdIn(membersId);
-        Map<UUID, MemberEntity> memberEntityMap = new HashMap<>();
+        List<EmployeeEntity> members = employeeJpaRepository.findAllByIdIn(membersId);
+        Map<UUID, EmployeeEntity> memberEntityMap = new HashMap<>();
         if(members.size()!=membersId.size()) throw new DomainException("Cannot find all the members");
         entity.setMembers(new HashSet<>(members.size()));
         members.forEach(member -> memberEntityMap.put(member.getId(), member));
         domain.getMembers().forEach(member ->
-                entity.addMember(memberEntityMap.get(member.getMemberId().getValue()), member.getProjectRole())
+                entity.addMember(memberEntityMap.get(member.getEmployeeId().getValue()), member.getProjectRole().name())
         );
         return entity;
     }
@@ -85,8 +93,17 @@ public class ProjectAdapterService implements ReadProjectPort,
     @Override
     public Optional<Project> fetchProjectWithMembersById(Project.ProjectId projectId) {
         return projectJpaRepository.fetchProjectWithMembersById(projectId.getValue()).map(
-//                it -> projectMapper.toDomain(it, it.getMembers())
-                it -> projectMapper.toDomain(it, null)
+                it -> projectMapper.toDomain(it, it.getMembers())
         );
+    }
+
+    @Override
+    public Optional<Project> findProjectByName(String name) {
+        return projectJpaRepository.findByName(name).map(projectMapper::toDomain);
+    }
+
+    @Override
+    public Page<Project> findAll(Pageable pageRequest) {
+        return projectJpaRepository.findAll(pageRequest).map(projectMapper::toDomain);
     }
 }

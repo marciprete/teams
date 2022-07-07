@@ -1,4 +1,4 @@
-package it.maconsulting.teams.presentation.controller.member;
+package it.maconsulting.teams.presentation.controller.employee;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDto {
+public class EmployeeDto {
     private String name;
     private String surname;
     private String email;

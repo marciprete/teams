@@ -1,8 +1,8 @@
 package it.maconsulting.teams.persistence.mapper;
 
-import it.maconsulting.teams.domain.model.Member;
-import it.maconsulting.teams.domain.model.Project;
-import it.maconsulting.teams.persistence.jpa.entity.MemberEntity;
+import it.maconsulting.teams.domain.model.employee.Employee;
+import it.maconsulting.teams.domain.model.employee.EmployeeProjectRoleEnum;
+import it.maconsulting.teams.domain.model.project.Project;
 import it.maconsulting.teams.persistence.jpa.entity.ProjectEntity;
 import it.maconsulting.teams.persistence.jpa.entity.ProjectMemberEntity;
 import org.springframework.stereotype.Component;
@@ -22,11 +22,11 @@ public class ProjectMapper {
 
     public Project toDomain(ProjectEntity entity,
                      Set<ProjectMemberEntity> memberEntities) {
-        Set<Project.ProjectMember> members = new HashSet<>();
+        Set<Project.Member> members = new HashSet<>();
         if(memberEntities != null) {
-            memberEntities.forEach(me -> members.add(new Project.ProjectMember(
-                    new Member.MemberId(me.getId().getMemberId()),
-                    me.getRole()
+            memberEntities.forEach(me -> members.add(new Project.Member(
+                    new Employee.EmployeeId(me.getId().getMemberId()),
+                    EmployeeProjectRoleEnum.valueOf(me.getRole())
                     )
             ));
         }

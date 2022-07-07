@@ -1,6 +1,6 @@
 package it.maconsulting.teams.application.project.port.in;
 
-import it.maconsulting.teams.application.project.port.in.request.AddProjectMemberCommand;
+import it.maconsulting.teams.application.project.port.in.command.AddProjectMemberCommand;
 
 /**
  * @author Michele Arciprete
