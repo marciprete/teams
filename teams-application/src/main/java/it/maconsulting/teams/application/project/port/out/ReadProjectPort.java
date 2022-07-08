@@ -12,6 +12,7 @@ import java.util.Optional;
  */
 public interface ReadProjectPort {
     Optional<Project> fetchProjectWithMembersById(Project.ProjectId projectId);
+    Optional<Project> fetchProjectWithMembersByName(String name);
 
     Optional<Project> findProjectByName(String name);
 

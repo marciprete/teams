@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @WebAdapter
 @RestController
-@Api(tags = {"Employee"})
+@Api(tags = {"Employees"})
 @RequiredArgsConstructor
 @RequestMapping("/employees")
 public class EmployeeController {

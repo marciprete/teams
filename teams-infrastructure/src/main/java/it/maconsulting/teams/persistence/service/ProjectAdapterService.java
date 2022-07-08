@@ -98,6 +98,13 @@ public class ProjectAdapterService implements ReadProjectPort,
     }
 
     @Override
+    public Optional<Project> fetchProjectWithMembersByName(String name) {
+        return projectJpaRepository.fetchProjectWithMembersByName(name).map(
+                it -> projectMapper.toDomain(it, it.getMembers())
+        );
+    }
+
+    @Override
     public Optional<Project> findProjectByName(String name) {
         return projectJpaRepository.findByName(name).map(projectMapper::toDomain);
     }

@@ -28,7 +28,7 @@ public class ReadProjectService implements ReadProjectUseCase {
     }
 
     @Override
-    public Optional<Project> readProjectDetails(Project.ProjectId id) {
-        return Optional.empty();
+    public Optional<Project> readProjectDetails(String name) {
+        return readProjectPort.fetchProjectWithMembersByName(name);
     }
 }

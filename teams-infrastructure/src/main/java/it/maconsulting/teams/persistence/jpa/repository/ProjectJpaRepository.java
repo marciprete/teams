@@ -21,4 +21,8 @@ public interface ProjectJpaRepository extends PagingAndSortingRepository<Project
     Optional<ProjectEntity> fetchProjectWithMembersById(@Param("uuid") UUID uuid);
 
     Optional<ProjectEntity> findByName(String name);
+    @Query("select p from ProjectEntity p " +
+            "left outer join fetch p.members " +
+            "where p.name = :name")
+    Optional<ProjectEntity> fetchProjectWithMembersByName(String name);
 }

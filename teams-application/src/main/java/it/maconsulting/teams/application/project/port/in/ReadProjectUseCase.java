@@ -14,6 +14,6 @@ public interface ReadProjectUseCase {
 
     Page<Project> list(Pageable pageRequest);
 
-    Optional<Project> readProjectDetails(Project.ProjectId id);
+    Optional<Project> readProjectDetails(String name);
 
 }

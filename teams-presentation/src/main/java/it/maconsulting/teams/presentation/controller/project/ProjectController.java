@@ -33,7 +33,7 @@ import java.util.UUID;
 @Slf4j
 @WebAdapter
 @RestController
-@Api(tags = "Project")
+@Api(tags = "Projects")
 @RequiredArgsConstructor
 @RequestMapping("projects")
 public class ProjectController {
@@ -46,7 +46,7 @@ public class ProjectController {
 
     @PostMapping("/{name}")
     @ApiOperation(value = "Create a Project with a name. Project name is unique",
-            tags = {"Employees"},
+            tags = {"Projects"},
             authorizations = @Authorization(value = "create",
                     scopes = {@AuthorizationScope(description = "Create Project scope",
                             scope = "project:create")}))
@@ -66,9 +66,14 @@ public class ProjectController {
         );
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Void> getDetails(@PathVariable UUID id) {
-        readProjectUseCase.readProjectDetails(new Project.ProjectId(id));
+    @GetMapping("/{name}")
+    @ApiOperation(value = "Get a Project by its name and retrieve it with its details",
+            tags = {"Projects"},
+            authorizations = @Authorization(value = "getDetails",
+                    scopes = {@AuthorizationScope(description = "Get Project details scope",
+                            scope = "project:view-details")}))
+    public ResponseEntity<Void> getDetails(@PathVariable String name) {
+        readProjectUseCase.readProjectDetails(name);
         return null;
     }
 
