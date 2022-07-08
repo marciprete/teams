@@ -26,6 +26,7 @@ public class ProjectMapper {
         if(memberEntities != null) {
             memberEntities.forEach(me -> members.add(new Project.Member(
                     new Employee.EmployeeId(me.getId().getMemberId()),
+                    me.getMember().getName() + " " + me.getMember().getSurname(),
                     EmployeeProjectRoleEnum.valueOf(me.getRole())
                     )
             ));

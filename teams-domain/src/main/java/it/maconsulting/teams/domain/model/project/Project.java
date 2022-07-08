@@ -1,5 +1,6 @@
 package it.maconsulting.teams.domain.model.project;
 
+import it.maconsulting.microkernel.exceptions.DomainException;
 import it.maconsulting.teams.domain.model.employee.Employee;
 import it.maconsulting.teams.domain.model.employee.EmployeeProjectRoleEnum;
 import lombok.Builder;
@@ -48,7 +49,7 @@ public class Project {
         if (role.equals(EmployeeProjectRoleEnum.PROJECT_MANAGER)) {
             verifyOnlyOneProjectManager();
         }
-        this.members.add(new Member(employee.getId().get(), role));
+        this.members.add(new Member(employee.getId().get(), "", role));
 
     }
 
@@ -61,12 +62,13 @@ public class Project {
     @Value
     public static class Member {
         Employee.EmployeeId employeeId;
+        String fullName;
         EmployeeProjectRoleEnum projectRole;
     }
 
     private void verifyOnlyOneProjectManager() {
         if(this.members.stream().anyMatch(it -> EmployeeProjectRoleEnum.PROJECT_MANAGER.equals(it.projectRole))) {
-            throw new RuntimeException("This project already has a Project Manager");
+            throw new DomainException("This project already has a Project Manager");
         }
     }
 }

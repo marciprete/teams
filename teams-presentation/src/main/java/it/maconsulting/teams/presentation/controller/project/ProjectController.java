@@ -72,9 +72,10 @@ public class ProjectController {
             authorizations = @Authorization(value = "getDetails",
                     scopes = {@AuthorizationScope(description = "Get Project details scope",
                             scope = "project:view-details")}))
-    public ResponseEntity<Void> getDetails(@PathVariable String name) {
-        readProjectUseCase.readProjectDetails(name);
-        return null;
+    public ResponseEntity<ProjectDetailsDto> getDetails(@PathVariable String name) {
+        return ResponseEntity.ok(readProjectUseCase.readProjectDetails(name)
+                .map(projectDtoMapper::toProjectDetailsDto)
+                .orElse(new ProjectDetailsDto()));
     }
 
     @PutMapping(path = "/project/{projectId}/add/{memberId}/role/{role}")
