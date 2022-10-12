@@ -1,6 +1,7 @@
 package it.maconsulting.teams.application.service.project;
 
 import it.maconsulting.microkernel.annotations.UseCase;
+import it.maconsulting.microkernel.exceptions.DomainException;
 import it.maconsulting.teams.application.project.port.in.CreateProjectUseCase;
 import it.maconsulting.teams.application.project.port.out.CreateProjectPort;
 import it.maconsulting.teams.application.project.port.out.ReadProjectPort;
@@ -25,7 +26,7 @@ public class CreateProjectService implements CreateProjectUseCase {
 
     @Override
     public Project createProject(String name) {
-        readProjectPort.findProjectByName(name).ifPresent(val -> {throw new RuntimeException("Project already exists");});
+        readProjectPort.findProjectByName(name).ifPresent(val -> {throw new DomainException("Project already exists");});
         Project project = Project.builder()
                 .id(new Project.ProjectId(UUID.randomUUID()))
                 .name(name)

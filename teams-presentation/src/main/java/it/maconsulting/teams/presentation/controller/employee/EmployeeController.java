@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import java.security.Principal;
 import java.util.UUID;
@@ -32,8 +33,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @WebAdapter
 @RestController
-@Api(tags = {"Employees"})
 @RequiredArgsConstructor
+@Api(tags = {"Employees"})
 @RequestMapping("/employees")
 public class EmployeeController {
     private final CreateEmployeeUseCase createEmployeeUseCase;
@@ -46,7 +47,7 @@ public class EmployeeController {
             authorizations = @Authorization(value = "createEmployee",
                     scopes = {@AuthorizationScope(description = "Create Employees scope",
                             scope = "employee:create")}))
-    public ResponseEntity<Void> createEmployee(@RequestBody CreateEmployeeCommand command,
+    public ResponseEntity<Void> createEmployee(@Valid @RequestBody CreateEmployeeCommand command,
                                                @ApiIgnore Principal principal) {
         return new ResponseEntity(employeeDtoMapper.toEmployeeCreated(createEmployeeUseCase.createEmployee(command)),
                 HttpStatus.CREATED);

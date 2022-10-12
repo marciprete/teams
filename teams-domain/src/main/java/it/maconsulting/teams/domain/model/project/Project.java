@@ -2,14 +2,13 @@ package it.maconsulting.teams.domain.model.project;
 
 import it.maconsulting.microkernel.exceptions.DomainException;
 import it.maconsulting.teams.domain.model.employee.Employee;
-import it.maconsulting.teams.domain.model.employee.EmployeeProjectRoleEnum;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Value;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.ValueObject;
 
-import java.lang.reflect.Member;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -49,8 +48,18 @@ public class Project {
         if (role.equals(EmployeeProjectRoleEnum.PROJECT_MANAGER)) {
             verifyOnlyOneProjectManager();
         }
+        verifyDuplicateMember(employee);
         this.members.add(new Member(employee.getId().get(), "", role));
+    }
 
+    public void changeRole(Member member) {
+        if (member.getProjectRole().equals(EmployeeProjectRoleEnum.PROJECT_MANAGER)) {
+            verifyOnlyOneProjectManager();
+        }
+        Member existing = members.stream().filter(it -> member.getEmployeeId().equals(it.employeeId)).findFirst()
+                .orElseThrow(() -> new DomainException("Failed getting project member"));
+        members.remove(existing);
+        members.add(member);
     }
 
     @Value
@@ -63,12 +72,19 @@ public class Project {
     public static class Member {
         Employee.EmployeeId employeeId;
         String fullName;
+        @EqualsAndHashCode.Exclude
         EmployeeProjectRoleEnum projectRole;
     }
 
     private void verifyOnlyOneProjectManager() {
         if(this.members.stream().anyMatch(it -> EmployeeProjectRoleEnum.PROJECT_MANAGER.equals(it.projectRole))) {
             throw new DomainException("This project already has a Project Manager");
+        }
+    }
+
+    private void verifyDuplicateMember(Employee newMember) {
+        if(this.members.stream().anyMatch(member -> newMember.getId().get().equals(member.getEmployeeId()))) {
+            throw new DomainException("The user is already present in the project");
         }
     }
 }

@@ -9,8 +9,8 @@ import org.jmolecules.ddd.annotation.ValueObject;
 import java.util.*;
 
 /**
- * A Team that aggregates a certain number of workers. A {@link Team} object only
- * contains can only contain up to 10 members.
+ * A Team that aggregates a certain number of workers.
+ * A {@link Team} object can only contain up to 10 members.
  * Members cannot have the same email.
  *
  * @author Michele Arciprete
@@ -35,7 +35,7 @@ public class Team {
     private final Set<TeamMember> teamMembers;
 
     /**
-     * Creates a {@link Team} entity without an ID. Use to create a new entity that is not yet
+     * Creates a {@link Team} entity without an ID. Used to create a new entity that is not yet
      * persisted.
      */
     public static Team withoutId(

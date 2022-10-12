@@ -1,6 +1,7 @@
 package it.maconsulting.teams.presentation.controller.team;
 
 import io.swagger.annotations.Api;
+import it.maconsulting.teams.application.team.port.in.CreateTeamUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,12 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequiredArgsConstructor
 @Api(tags = {"Teams"})
+@RequiredArgsConstructor
 @RequestMapping("teams")
 public class TeamsController {
+
+    private CreateTeamUseCase createTeamUseCase;
 
     /**
      * Get a list of the existing teams

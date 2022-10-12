@@ -6,7 +6,7 @@ import it.maconsulting.teams.application.project.port.in.command.ProjectMemberCo
  * @author Michele Arciprete
  * @since 0.0.1-SNAPSHOT
  */
-public interface AddProjectMemberUseCase {
+public interface ChangeProjectRoleUseCase {
 
-    void addProjectMember(ProjectMemberCommand command);
+    void changeProjectRole(ProjectMemberCommand command);
 }

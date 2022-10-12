@@ -14,7 +14,9 @@ import java.util.function.Function;
 public class EmployeeDtoMapper implements Function<Employee, EmployeeDto> {
     @Override
     public EmployeeDto apply(Employee employee) {
-        return new EmployeeDto(employee.getName(),
+        return new EmployeeDto(
+                employee.getId().get().getValue(),
+                employee.getName(),
                 employee.getSurname(),
                 employee.getEmail());
     }

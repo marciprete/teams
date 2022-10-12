@@ -1,6 +1,7 @@
 package it.maconsulting.teams.persistence.service;
 
 import it.maconsulting.microkernel.annotations.PersistenceAdapter;
+import it.maconsulting.microkernel.exceptions.DomainException;
 import it.maconsulting.teams.application.employee.port.out.CreateEmployeePort;
 import it.maconsulting.teams.application.employee.port.out.ReadEmployeePort;
 import it.maconsulting.teams.domain.model.employee.Employee;
@@ -38,6 +39,10 @@ public class EmployeeAdapterService implements ReadEmployeePort,
 
     @Override
     public Employee create(Employee employee) {
+        Optional<EmployeeEntity> byEmail = employeeJpaRepository.findByEmail(employee.getEmail());
+        if(byEmail.isPresent()) {
+            throw new DomainException("User Already Exists");
+        }
         return mapper.toDomain(employeeJpaRepository.save(mapper.toEntity(employee)));
     }
 }

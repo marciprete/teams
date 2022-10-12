@@ -1,4 +1,4 @@
-package it.maconsulting.teams.domain.model.employee;
+package it.maconsulting.teams.domain.model.project;
 
 public enum EmployeeProjectRoleEnum {
     PROJECT_MANAGER,

@@ -6,11 +6,11 @@ import io.swagger.annotations.Authorization;
 import io.swagger.annotations.AuthorizationScope;
 import it.maconsulting.microkernel.annotations.WebAdapter;
 import it.maconsulting.teams.application.project.port.in.AddProjectMemberUseCase;
-import it.maconsulting.teams.application.project.port.in.ChangeProjectNameUseCase;
+import it.maconsulting.teams.application.project.port.in.ChangeProjectRoleUseCase;
 import it.maconsulting.teams.application.project.port.in.CreateProjectUseCase;
 import it.maconsulting.teams.application.project.port.in.ReadProjectUseCase;
-import it.maconsulting.teams.application.project.port.in.command.AddProjectMemberCommand;
-import it.maconsulting.teams.domain.model.employee.EmployeeProjectRoleEnum;
+import it.maconsulting.teams.application.project.port.in.command.ProjectMemberCommand;
+import it.maconsulting.teams.domain.model.project.EmployeeProjectRoleEnum;
 import it.maconsulting.teams.domain.model.employee.Employee;
 import it.maconsulting.teams.domain.model.project.Project;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +37,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("projects")
 public class ProjectController {
-    private final AddProjectMemberUseCase addProjectMemberService;
-    private final ChangeProjectNameUseCase changeProjectNameService;
+    private final AddProjectMemberUseCase addProjectMemberUseCase;
+    private final ChangeProjectRoleUseCase changeProjectRoleUseCase;
     private final ReadProjectUseCase readProjectUseCase;
     private final CreateProjectUseCase createProjectUseCase;
 
@@ -79,18 +79,43 @@ public class ProjectController {
     }
 
     @PutMapping(path = "/project/{projectId}/add/{memberId}/role/{role}")
+    @ApiOperation(value = "Add a Member to a Project with a role.",
+            tags = {"Projects"},
+            authorizations = @Authorization(value = "add-member",
+                    scopes = {@AuthorizationScope(description = "Add Member to Project scope",
+                            scope = "project:add-member")}))
     public ResponseEntity<Void> addProjectMember(
             @PathVariable UUID projectId,
             @PathVariable UUID memberId,
             @PathVariable EmployeeProjectRoleEnum role) {
 
-        addProjectMemberService.addProjectMember(
-                new AddProjectMemberCommand(
+        addProjectMemberUseCase.addProjectMember(
+                new ProjectMemberCommand(
                         new Project.ProjectId(projectId),
                         new Employee.EmployeeId(memberId),
                         role
                 ));
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/project/{projectId}/change/{memberId}/role/{role}")
+    @ApiOperation(value = "Change te Member role in an existing Project.",
+            tags = {"Projects"},
+            authorizations = @Authorization(value = "change-role",
+                    scopes = {@AuthorizationScope(description = "Change Project Role scope",
+                            scope = "project:change-role")}))
+    public ResponseEntity<Void> changeMemberRole(
+            @PathVariable UUID projectId,
+            @PathVariable UUID memberId,
+            @PathVariable EmployeeProjectRoleEnum role) {
+
+        changeProjectRoleUseCase.changeProjectRole(
+                new ProjectMemberCommand(
+                        new Project.ProjectId(projectId),
+                        new Employee.EmployeeId(memberId),
+                        role
+                ));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

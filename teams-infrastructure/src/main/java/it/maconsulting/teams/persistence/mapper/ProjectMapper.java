@@ -1,7 +1,7 @@
 package it.maconsulting.teams.persistence.mapper;
 
 import it.maconsulting.teams.domain.model.employee.Employee;
-import it.maconsulting.teams.domain.model.employee.EmployeeProjectRoleEnum;
+import it.maconsulting.teams.domain.model.project.EmployeeProjectRoleEnum;
 import it.maconsulting.teams.domain.model.project.Project;
 import it.maconsulting.teams.persistence.jpa.entity.ProjectEntity;
 import it.maconsulting.teams.persistence.jpa.entity.ProjectMemberEntity;

@@ -24,7 +24,7 @@ public class CreateEmployeeService implements CreateEmployeeUseCase {
     @Override
     public Employee createEmployee(CreateEmployeeCommand command) {
         return createEmployeePort.create(Employee.builder()
-                        .id(UUID.randomUUID())
+                        .id(new Employee.EmployeeId(UUID.randomUUID()))
                         .name(command.getName())
                         .surname(command.getSurname())
                         .email(command.getEmail())

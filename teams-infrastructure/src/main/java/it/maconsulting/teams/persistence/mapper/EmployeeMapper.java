@@ -18,7 +18,7 @@ public class EmployeeMapper {
     public Employee toDomain(EmployeeEntity entity) {
         Set<Project.Member> members = new HashSet<>();
         return Employee.builder()
-                .id(entity.getId())
+                .id(new Employee.EmployeeId(entity.getId()))
                 .name(entity.getName())
                 .surname(entity.getSurname())
                 .email(entity.getEmail())

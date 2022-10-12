@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -30,13 +27,9 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler({DomainException.class/*, HttpMessageNotReadableException.class*/})
     public ResponseEntity<Object> domainModelNotFoundException(Exception ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", new Date());
-        body.put("status", status.value());
-        body.put("errors", ex.getMessage());
-        return new ResponseEntity<>(body, status);
+        List<String> errors = Arrays.asList(ex.getMessage());
+        return new ResponseEntity<>(buildBody(errors, status.value()), status);
     }
-
 
     /**
      * error handle for @Valid
@@ -46,20 +39,24 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", new Date());
-        body.put("status", status.value());
-
-        //Get all errors
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());
 
-        body.put("errors", errors);
 
-        return new ResponseEntity<>(body, headers, status);
+        return new ResponseEntity<>(buildBody(errors, status.value()), headers, status);
 
     }
+
+    private Map<String, Object> buildBody(List<String> errors, int status) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
+        body.put("status", status);
+
+        body.put("errors", errors);
+        return body;
+    }
+
 }
