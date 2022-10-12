@@ -1,9 +1,9 @@
 package it.maconsulting.teams.persistence.jpa.repository;
 
-import it.maconsulting.teams.persistence.jpa.entity.ProjectEntity;
 import it.maconsulting.teams.persistence.jpa.entity.TeamEntity;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -12,4 +12,5 @@ import java.util.UUID;
  */
 public interface TeamJpaRepository extends CrudRepository<TeamEntity, UUID> {
 
+    Optional<TeamEntity> findByName(String name);
 }

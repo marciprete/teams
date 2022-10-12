@@ -41,7 +41,7 @@ public class Team {
     public static Team withoutId(
             String name,
             Set<TeamMember> teamMembers) {
-        return new Team(null, name, teamMembers);
+        return new Team(new TeamId(UUID.randomUUID()), name, teamMembers);
     }
 
     /**
@@ -60,7 +60,7 @@ public class Team {
         this.teamMembers = teamMembers != null ? teamMembers : new HashSet<>();
     }
 
-    Optional<TeamId> getId() {
+    public Optional<TeamId> getId() {
         return Optional.ofNullable(id);
     }
 
@@ -79,8 +79,8 @@ public class Team {
 
     @Value
     @ValueObject
-    static class TeamMember {
-        UUID teamMemberId;
+    public static class TeamMember {
+//        UUID teamMemberId;
         Employee.EmployeeId employeeId;
         String email;
     }
