@@ -1,11 +1,10 @@
 package it.maconsulting.teams.persistence.jpa.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,7 +22,14 @@ public class TeamEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "team", cascade = {CascadeType.ALL})
     Set<TeamMemberEntity> members;
 
+    public void addMember(EmployeeEntity member, String email) {
+        TeamMemberEntity teamMemberEntity = new TeamMemberEntity(this, member, email);
+        members.add(teamMemberEntity);
+        member.getTeams().add(teamMemberEntity);
+    }
 }

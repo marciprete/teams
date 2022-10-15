@@ -1,5 +1,6 @@
 package it.maconsulting.teams.domain.model.team;
 
+import it.maconsulting.microkernel.exceptions.DomainException;
 import it.maconsulting.teams.domain.model.employee.Employee;
 import lombok.Getter;
 import lombok.Value;
@@ -64,11 +65,18 @@ public class Team {
         return Optional.ofNullable(id);
     }
 
-    void addTeamMember(TeamMember teamMember) {
+    public void addTeamMember(Employee employee, String email) {
         if(teamMembers.size()==10) {
             throw new RuntimeException("Teams can have maximum 10 members");
         }
-        teamMembers.add(teamMember);
+        verifyDuplicateEmail(email);
+        teamMembers.add(new TeamMember(employee.getId().get(), email));
+    }
+
+    private void verifyDuplicateEmail(String email) {
+        if(this.teamMembers.stream().anyMatch(member -> member.getEmail().equals(email))) {
+            throw new DomainException("The team email is already used");
+        }
     }
 
     @Value

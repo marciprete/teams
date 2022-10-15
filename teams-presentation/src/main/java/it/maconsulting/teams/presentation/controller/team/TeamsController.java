@@ -5,15 +5,26 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import io.swagger.annotations.AuthorizationScope;
 import it.maconsulting.microkernel.annotations.WebAdapter;
+import it.maconsulting.teams.application.team.port.in.AddTeamMemberUseCase;
 import it.maconsulting.teams.application.team.port.in.CreateTeamUseCase;
+import it.maconsulting.teams.application.team.port.in.ReadTeamsUseCase;
 import it.maconsulting.teams.application.team.port.in.command.TeamCommand;
+import it.maconsulting.teams.application.team.port.in.command.TeamMemberCommand;
+import it.maconsulting.teams.domain.model.employee.Employee;
+import it.maconsulting.teams.domain.model.team.Team;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
 import java.security.Principal;
+import java.util.UUID;
 
 /**
  * @author Michele Arciprete
@@ -28,23 +39,26 @@ import java.security.Principal;
 public class TeamsController {
 
     private final TeamDtoMapper teamDtoMapper = new TeamDtoMapper();
-//    private final ReadTeamsUseCase readTeamsUseCase;
+    private final ReadTeamsUseCase readTeamsUseCase;
     private final CreateTeamUseCase createTeamUseCase;
-//    private final addTeamMemberUseCase addTeamMemberUseCase;
+    private final AddTeamMemberUseCase addTeamMemberUseCase;
 
     /**
      * Get a list of the existing teams
      * @return
      */
-//    @GetMapping
-//    @ApiOperation(value = "Get a paged list of all the teams.",
-//            tags = {"Teams"},
-//            authorizations = @Authorization(value = "list",
-//                    scopes = {@AuthorizationScope(description = "List Teams scope",
-//                            scope = "teams:list")}))
-//    public List<Object> list() {
-//        return readTeamsUseCase.getTeams();
-//    }
+    @GetMapping
+    @ApiOperation(value = "Get a paged list of all the teams.",
+            tags = {"Teams"},
+            authorizations = @Authorization(value = "list",
+                    scopes = {@AuthorizationScope(description = "List Teams scope",
+                            scope = "teams:list")}))
+    public ResponseEntity<Page<TeamDto>> list(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "25") @Max(100) int size) {
+        return ResponseEntity.ok(readTeamsUseCase.getTeams(PageRequest.of(page, size))
+                .map(teamDtoMapper::toDto));
+    }
 
     /**
      * Create an empty team
@@ -75,23 +89,23 @@ public class TeamsController {
         return null;
     }
 
-//    @PutMapping(path = "/teams/{projectId}/add/{memberId}")
-//    @ApiOperation(value = "Add a Member to a Team.",
-//            tags = {"Teams"},
-//            authorizations = @Authorization(value = "add-member",
-//                    scopes = {@AuthorizationScope(description = "Add Member to Team scope",
-//                            scope = "teams:add-member")}))
-//    public ResponseEntity<Void> addProjectMember(
-//            @PathVariable UUID projectId,
-//            @PathVariable UUID memberId,
-//            @ApiIgnore Principal principal) {
-//
-//        addProjectMemberUseCase.addTeamMember(
-//                new TeamMemberCommand(
-//                        new Team.TeamId(projectId),
-//                        new Employee.EmployeeId(memberId)
-//                ));
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
+    @PutMapping(path = "/teams/add")
+    @ApiOperation(value = "Add a Member to a Team.",
+            tags = {"Teams"},
+            authorizations = @Authorization(value = "add-member",
+                    scopes = {@AuthorizationScope(description = "Add Member to Team scope",
+                            scope = "teams:add-member")}))
+    public ResponseEntity<Void> addTeamMember(
+            @Valid @RequestBody TeamMemberCommand command,
+            @ApiIgnore Principal principal) {
+
+        addTeamMemberUseCase.addTeamMember(
+                new TeamMemberCommand(
+                        command.getTeamId(),
+                        command.getEmployeeId(),
+                        command.getTeamEmail()
+                ));
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 }

@@ -57,6 +57,11 @@ public class ProjectController {
     }
 
     @GetMapping
+    @ApiOperation(value = "List all the existing Projects",
+            tags = {"Projects"},
+            authorizations = @Authorization(value = "create",
+                    scopes = {@AuthorizationScope(description = "List Project scope",
+                            scope = "project:list")}))
     public ResponseEntity<Page<ProjectDto>> listProjects(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "25") @Max(100) int size) {

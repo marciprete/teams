@@ -2,6 +2,7 @@ package it.maconsulting.teams.persistence.service;
 
 import it.maconsulting.microkernel.annotations.PersistenceAdapter;
 import it.maconsulting.microkernel.exceptions.DomainException;
+import it.maconsulting.microkernel.exceptions.EntityNotFoundException;
 import it.maconsulting.teams.application.project.port.out.CreateProjectPort;
 import it.maconsulting.teams.application.project.port.out.ModifyProjectPort;
 import it.maconsulting.teams.application.project.port.out.ReadProjectPort;
@@ -51,9 +52,9 @@ public class ProjectAdapterService implements ReadProjectPort,
      */
     @Override
     public Project update(Project project) {
-        UUID projecId = project.getId().map(Project.ProjectId::getValue).orElseThrow();
-        ProjectEntity old = projectJpaRepository.fetchProjectWithMembersById(projecId)
-                .orElseThrow();
+        UUID projectId = project.getId().map(Project.ProjectId::getValue).orElseThrow();
+        ProjectEntity old = projectJpaRepository.fetchProjectWithMembersById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project", projectId.toString()));
 
         ProjectEntity mapped = projectMapper.toEntity(project);
         mapped = rehidrate(mapped, project);

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author Michele Arciprete
@@ -27,8 +28,8 @@ public class EmployeeAdapterService implements ReadEmployeePort,
     private final EmployeeMapper mapper = new EmployeeMapper();
 
     @Override
-    public Optional<Employee> findById(Employee.EmployeeId id) {
-        return employeeJpaRepository.findById(id.getValue()).map(mapper::toDomain);
+    public Optional<Employee> findById(Employee.EmployeeId employeeId) {
+        return employeeJpaRepository.findById(employeeId.getValue()).map(mapper::toDomain);
     }
 
     @Override

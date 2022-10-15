@@ -1,6 +1,6 @@
 package it.maconsulting.teams.application.team.port.in;
 
-import it.maconsulting.teams.application.project.port.in.command.ProjectMemberCommand;
+import it.maconsulting.teams.application.team.port.in.command.TeamMemberCommand;
 
 /**
  * @author Michele Arciprete
@@ -8,6 +8,6 @@ import it.maconsulting.teams.application.project.port.in.command.ProjectMemberCo
  */
 public interface AddTeamMemberUseCase {
 
-    void addTeamMember(ProjectMemberCommand command);
+    void addTeamMember(TeamMemberCommand command);
 
 }

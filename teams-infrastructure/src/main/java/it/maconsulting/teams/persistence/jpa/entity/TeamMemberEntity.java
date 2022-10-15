@@ -1,6 +1,7 @@
 package it.maconsulting.teams.persistence.jpa.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "team_member")
 public class TeamMemberEntity {
 
@@ -26,4 +28,10 @@ public class TeamMemberEntity {
     @MapsId("memberId")
     private EmployeeEntity member;
 
+    public TeamMemberEntity(TeamEntity team, EmployeeEntity member, String email) {
+        this.email = email;
+        this.team = team;
+        this.member = member;
+        this.id = new TeamMemberId(team.getId(), member.getId());
+    }
 }
