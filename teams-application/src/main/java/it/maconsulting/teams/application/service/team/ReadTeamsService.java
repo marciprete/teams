@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 @Slf4j
 @UseCase
 @RequiredArgsConstructor
@@ -23,5 +25,10 @@ public class ReadTeamsService implements ReadTeamsUseCase {
     @Override
     public Page<Team> getTeams(Pageable pageRequest) {
         return readTeamsPort.list(pageRequest);
+    }
+
+    @Override
+    public Optional<Team> getTeamDetails(String name) {
+        return readTeamsPort.findByName(name);
     }
 }

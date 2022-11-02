@@ -1,9 +1,7 @@
 package it.maconsulting.teams.persistence.jpa.repository;
 
-import it.maconsulting.teams.domain.model.team.Team;
 import it.maconsulting.teams.persistence.jpa.entity.TeamEntity;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
@@ -20,5 +18,10 @@ public interface TeamJpaRepository extends PagingAndSortingRepository<TeamEntity
     @Query("from TeamEntity t " +
             "left join fetch t.members " +
             "where t.id = :teamId")
-    Optional<TeamEntity> ftchTeamWithMembersById(UUID teamId);
+    Optional<TeamEntity> fetchTeamWithMembersById(UUID teamId);
+
+    @Query("from TeamEntity t " +
+            "left join fetch t.members " +
+            "where t.name = :name")
+    Optional<TeamEntity> fetchTeamWithMembersByName(String name);
 }

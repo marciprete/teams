@@ -18,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Michele Arciprete
@@ -45,7 +44,7 @@ public class TeamAdapterService implements ReadTeamsPort, CreateTeamPort, Modify
 
     @Override
     public Team addMember(Team.TeamId teamId, Employee.EmployeeId employeeId, String email) {
-        TeamEntity entity = teamJpaRepository.ftchTeamWithMembersById(teamId.getValue()).orElseThrow(
+        TeamEntity entity = teamJpaRepository.fetchTeamWithMembersById(teamId.getValue()).orElseThrow(
                 () -> new EntityNotFoundException("Team", teamId.toString())
         );
         EmployeeEntity employee = employeeJpaRepository.findById(employeeId.getValue()).orElseThrow(
@@ -69,12 +68,12 @@ public class TeamAdapterService implements ReadTeamsPort, CreateTeamPort, Modify
 
     @Override
     public Optional<Team> findByName(String name) {
-        return teamJpaRepository.findByName(name).map(teamMapper::toDomain);
+        return teamJpaRepository.fetchTeamWithMembersByName(name).map(entity -> teamMapper.toDomain(entity, entity.getMembers()));
     }
 
     @Override
     public Optional<Team> fetchTeamWithMembersById(Team.TeamId teamId) {
-        return teamJpaRepository.ftchTeamWithMembersById(teamId.getValue())
+        return teamJpaRepository.fetchTeamWithMembersById(teamId.getValue())
                 .map(it -> teamMapper.toDomain(it, it.getMembers()));
     }
 }

@@ -10,8 +10,7 @@ import it.maconsulting.teams.application.team.port.in.CreateTeamUseCase;
 import it.maconsulting.teams.application.team.port.in.ReadTeamsUseCase;
 import it.maconsulting.teams.application.team.port.in.command.TeamCommand;
 import it.maconsulting.teams.application.team.port.in.command.TeamMemberCommand;
-import it.maconsulting.teams.domain.model.employee.Employee;
-import it.maconsulting.teams.domain.model.team.Team;
+import it.maconsulting.teams.presentation.controller.project.ProjectDetailsDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,6 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import java.security.Principal;
-import java.util.UUID;
 
 /**
  * @author Michele Arciprete
@@ -82,14 +80,13 @@ public class TeamsController {
             authorizations = @Authorization(value = "getTeamsDetails",
                     scopes = {@AuthorizationScope(description = "Get Team details scope",
                             scope = "teams:view-details")}))
-    public ResponseEntity<?> getDetails(@PathVariable String name) {
-//        return ResponseEntity.ok(readProjectUseCase.readProjectDetails(name)
-//                .map(projectDtoMapper::toProjectDetailsDto)
-//                .orElse(new ProjectDetailsDto()));
-        return null;
+    public ResponseEntity<TeamDetailsDto> getDetails(@PathVariable String name) {
+        return ResponseEntity.ok(readTeamsUseCase.getTeamDetails(name)
+                .map(teamDtoMapper::toTeamDetailsDto)
+                .orElse(new TeamDetailsDto()));
     }
 
-    @PutMapping(path = "/teams/add")
+    @PutMapping(path = "/member/add")
     @ApiOperation(value = "Add a Member to a Team.",
             tags = {"Teams"},
             authorizations = @Authorization(value = "add-member",

@@ -26,10 +26,11 @@ public class TeamMapper {
                      Set<TeamMemberEntity> memberEntities) {
         Set<Team.TeamMember> members = new HashSet<>();
         if(memberEntities != null) {
-            memberEntities.forEach(me -> members.add(new Team.TeamMember(
-                    new Employee.EmployeeId(me.getId().getMemberId()),
-                    me.getEmail()
-                    )
+            memberEntities.forEach(memberEntity -> members.add(new Team.TeamMember(
+                    new Employee.EmployeeId(memberEntity.getId().getMemberId()),
+                    memberEntity.getMember().getFullName(),
+                    memberEntity.getEmail()
+                )
             ));
         }
         return Team.withId(new Team.TeamId(entity.getId()),

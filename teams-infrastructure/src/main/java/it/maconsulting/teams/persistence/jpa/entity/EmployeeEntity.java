@@ -36,4 +36,7 @@ public class EmployeeEntity {
     @OneToMany(mappedBy = "member")
     Set<TeamMemberEntity> teams;
 
+    public String getFullName() {
+        return this.name + " " + this.surname;
+    }
 }

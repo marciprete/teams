@@ -61,4 +61,8 @@ public class Employee {
     public static class EmployeeId {
         UUID value;
     }
+
+    public String getFullName() {
+        return this.name + " " + this.surname;
+    }
 }

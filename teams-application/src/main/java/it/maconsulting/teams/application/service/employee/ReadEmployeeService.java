@@ -22,7 +22,7 @@ public class ReadEmployeeService implements ReadEmployeeUseCase {
 
     @Override
     public Optional<Employee> findEmployeeById(Employee.EmployeeId id) {
-        return Optional.empty();
+        return readEmployeePort.findById(id);
     }
 
     @Override

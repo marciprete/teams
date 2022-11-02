@@ -1,6 +1,11 @@
 package it.maconsulting.teams.presentation.controller.team;
 
+import it.maconsulting.teams.domain.model.project.Project;
 import it.maconsulting.teams.domain.model.team.Team;
+import it.maconsulting.teams.presentation.controller.project.ProjectDetailsDto;
+import it.maconsulting.teams.presentation.controller.project.ProjectMemberDto;
+
+import java.util.stream.Collectors;
 
 /**
  * @author Michele Arciprete
@@ -13,14 +18,15 @@ public class TeamDtoMapper {
                 domain.getName());
     }
 
-//    public ProjectDetailsDto toProjectDetailsDto(Project domain) {
-//        return new ProjectDetailsDto(
-//                domain.getId().get().getValue(),
-//                domain.getName(),
-//                domain.getMembers().stream().map(member -> new ProjectMemberDto(
-//                        member.getEmployeeId().getValue(),
-//                        member.getFullName(),
-//                        member.getProjectRole().name()
-//                )).collect(Collectors.toList()));
-//    }
+    public TeamDetailsDto toTeamDetailsDto(Team domain) {
+        return new TeamDetailsDto(
+
+                domain.getId().get().getValue(),
+                domain.getName(),
+                domain.getTeamMembers().stream().map(member -> new TeamMemberDto(
+                        member.getEmployeeId().getValue(),
+                        member.getFullName(),
+                        member.getEmail()
+                )).collect(Collectors.toList()));
+    }
 }

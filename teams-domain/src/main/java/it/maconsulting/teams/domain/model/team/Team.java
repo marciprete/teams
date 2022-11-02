@@ -70,7 +70,7 @@ public class Team {
             throw new RuntimeException("Teams can have maximum 10 members");
         }
         verifyDuplicateEmail(email);
-        teamMembers.add(new TeamMember(employee.getId().get(), email));
+        teamMembers.add(new TeamMember(employee.getId().get(), employee.getFullName(), email));
     }
 
     private void verifyDuplicateEmail(String email) {
@@ -88,8 +88,8 @@ public class Team {
     @Value
     @ValueObject
     public static class TeamMember {
-//        UUID teamMemberId;
         Employee.EmployeeId employeeId;
+        private String fullName;
         String email;
     }
 
